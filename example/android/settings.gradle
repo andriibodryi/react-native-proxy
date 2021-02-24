@@ -1,0 +1,6 @@
+rootProject.name = 'ProxyExample'
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+
+include ':reactnativeproxy'
+project(':reactnativeproxy').projectDir = new File(rootProject.projectDir, '../../android')
