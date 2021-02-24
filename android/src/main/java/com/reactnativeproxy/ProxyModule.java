@@ -13,11 +13,15 @@ import com.facebook.react.modules.network.ReactCookieJarContainer;
 import java.net.Proxy;
 import okhttp3.OkHttpClient;
 
+import java.net.InetSocketAddress;
+
 import java.util.concurrent.TimeUnit;
 
 @ReactModule(name = ProxyModule.NAME)
 public class ProxyModule extends ReactContextBaseJavaModule {
     public static final String NAME = "Proxy";
+
+    public boolean isEnabledProxy = true;
 
     public ProxyModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -30,7 +34,7 @@ public class ProxyModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void disableProxy(Promise promise) {
+    public void disableProxy() {
         OkHttpClientProvider.setOkHttpClientFactory(() -> new OkHttpClient.Builder()
             .connectTimeout(0, TimeUnit.MILLISECONDS)
             .readTimeout(0, TimeUnit.MILLISECONDS)
@@ -40,11 +44,10 @@ public class ProxyModule extends ReactContextBaseJavaModule {
             .build());
 
         isEnabledProxy = false;
-        promise.resolve();
     }
 
     @ReactMethod
-    public void enableDefaultProxy(Promise promise) {
+    public void enableDefaultProxy() {
         OkHttpClientProvider.setOkHttpClientFactory(() -> new OkHttpClient.Builder()
              .connectTimeout(0, TimeUnit.MILLISECONDS)
              .readTimeout(0, TimeUnit.MILLISECONDS)
@@ -53,11 +56,10 @@ public class ProxyModule extends ReactContextBaseJavaModule {
              .build());
 
         isEnabledProxy = true;
-        promise.resolve();
     }
 
     @ReactMethod
-     public void setProxyUrl(String proxyUrls, int proxyPort, String userName, String password, Promise promise) {
+     public void setProxyUrl(String proxyUrls, int proxyPort) {
           Proxy proxyOption = new Proxy(Proxy.Type.HTTP,new InetSocketAddress(proxyUrls, proxyPort));
 
           OkHttpClientProvider.setOkHttpClientFactory(() -> new OkHttpClient.Builder()
@@ -71,6 +73,5 @@ public class ProxyModule extends ReactContextBaseJavaModule {
           if(!isEnabledProxy) {
             isEnabledProxy = true;
           }
-          promise.resolve();
      }
 }
