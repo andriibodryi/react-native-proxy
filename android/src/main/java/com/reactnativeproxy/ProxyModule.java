@@ -40,7 +40,7 @@ public class ProxyModule extends ReactContextBaseJavaModule {
             .build());
 
         isEnabledProxy = false;
-        promise.resolve()
+        promise.resolve();
     }
 
     @ReactMethod
@@ -53,7 +53,7 @@ public class ProxyModule extends ReactContextBaseJavaModule {
              .build());
 
         isEnabledProxy = true;
-        promise.resolve()
+        promise.resolve();
     }
 
     @ReactMethod
@@ -71,6 +71,6 @@ public class ProxyModule extends ReactContextBaseJavaModule {
           if(!isEnabledProxy) {
             isEnabledProxy = true;
           }
-          promise.resolve()
+          promise.resolve();
      }
 }
